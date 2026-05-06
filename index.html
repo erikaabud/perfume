@@ -4,25 +4,818 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfume</title>
+    <title>Essência Perfumes - Sua essência única</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Menu Principal */
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Logo */
+        .logo {
+            padding: 15px 0;
+        }
+
+        .logo a {
+            font-size: 28px;
+            font-weight: bold;
+            text-decoration: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            font-size: 12px;
+            display: block;
+            color: #999;
+        }
+
+        /* Menu Items */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 20px 0;
+            display: inline-block;
+            transition: color 0.3s ease;
+            font-size: 16px;
+        }
+
+        .nav-link:hover {
+            color: #764ba2;
+        }
+
+        /* Dropdown para categorias de perfumes */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            list-style: none;
+            z-index: 1000;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding-left: 25px;
+        }
+
+        /* Ícone de seta no dropdown */
+        .dropdown-icon {
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        /* Ícones de busca e carrinho */
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-icons a {
+            color: #333;
+            text-decoration: none;
+            font-size: 20px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-icons a:hover {
+            color: #764ba2;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: #764ba2;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        /* Menu Hamburguer (Mobile) */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* Main Content */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .featured-products {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .featured-products h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+            font-size: 32px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 24px;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* NOVA SEÇÃO - COLEÇÃO EXCLUSIVA */
+        .exclusive-collection {
+            padding: 80px 20px;
+            background: linear-gradient(145deg, #f9f3e8 0%, #f0e6db 100%);
+            margin: 40px 0;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exclusive-collection::before {
+            content: "✨";
+            font-size: 180px;
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+
+        .exclusive-collection::after {
+            content: "🌸";
+            font-size: 140px;
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+
+        .collection-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .collection-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .collection-header h2 {
+            font-size: 38px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .collection-header p {
+            font-size: 18px;
+            color: #7a6a5c;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .collection-badge {
+            display: inline-block;
+            background: rgba(118, 75, 162, 0.15);
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #764ba2;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
+            margin-bottom: 50px;
+        }
+
+        .collection-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .collection-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 45px rgba(118, 75, 162, 0.2);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #ffd89b 0%, #c7e9fb 100%);
+            color: #764ba2;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 30px;
+            z-index: 2;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .collection-img {
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            background: linear-gradient(145deg, #faf5f0, #fff9f3);
+            transition: transform 0.3s ease;
+        }
+
+        .collection-card:hover .collection-img {
+            transform: scale(1.02);
+        }
+
+        .collection-info {
+            padding: 25px 20px 25px;
+            text-align: center;
+        }
+
+        .collection-info h3 {
+            font-size: 22px;
+            color: #2d2d2d;
+            margin-bottom: 8px;
+        }
+
+        .collection-sub {
+            color: #9b8b7a;
+            font-size: 13px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .collection-notes {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .note-tag {
+            font-size: 11px;
+            padding: 4px 12px;
+            background: #f3ede8;
+            border-radius: 40px;
+            color: #7a5a4a;
+            font-weight: 500;
+        }
+
+        .collection-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #764ba2;
+            margin: 15px 0 12px;
+        }
+
+        .old-price {
+            font-size: 16px;
+            color: #bbb;
+            text-decoration: line-through;
+            margin-left: 8px;
+            font-weight: normal;
+        }
+
+        .collection-btn {
+            background: transparent;
+            border: 2px solid #764ba2;
+            color: #764ba2;
+            padding: 10px 25px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .collection-btn:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .collection-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .view-all {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 12px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            color: #764ba2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .view-all:hover {
+            background: #764ba2;
+            color: white;
+            gap: 15px;
+        }
+
+        /* Responsividade da nova seção */
+        @media (max-width: 768px) {
+            .collection-header h2 {
+                font-size: 28px;
+            }
+            .collection-img {
+                height: 200px;
+                font-size: 55px;
+            }
+            .exclusive-collection {
+                padding: 50px 15px;
+            }
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            font-size: 16px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                text-align: center;
+                gap: 0;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                transition: 0.3s;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-item {
+                margin: 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .nav-link {
+                padding: 15px;
+                width: 100%;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                display: none;
+                width: 100%;
+            }
+
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+
+            .nav-icons {
+                margin-right: 20px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-
+        <!-- header -->
         <header>
+            <nav class="navbar">
+                <div class="nav-container">
+                    <div class="logo">
+                        <a href="#">✨ ESSÊNCIA</a>
+                        <span>Perfumes & Fragrâncias</span>
+                    </div>
 
+                    <ul class="nav-menu" id="navMenu">
+                        <li class="nav-item"><a href="#" class="nav-link">🏠 Início</a></li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link">🌸 Perfumes <span class="dropdown-icon">▼</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">🌹 Florais & Românticos</a></li>
+                                <li><a href="#">🍊 Cítricos & Frescos</a></li>
+                                <li><a href="#">🪵 Amadeirados & Aromáticos</a></li>
+                                <li><a href="#">✨ Orientais & Quentes</a></li>
+                                <li><a href="#">🌿 Naturais & Veganos</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a href="#" class="nav-link">⭐ Lançamentos</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">🏷️ Promoções</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">📖 Sobre Nós</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">📞 Contato</a></li>
+                    </ul>
+
+                    <div class="nav-icons">
+                        <a href="#" title="Buscar">🔍</a>
+                        <a href="#" title="Minha Conta">👤</a>
+                        <a href="#" title="Carrinho">🛒 <span class="cart-count">0</span></a>
+                        <div class="hamburger" id="hamburger">☰</div>
+                    </div>
+                </div>
+            </nav>
         </header>
+
         <main>
-            <section>
-                
+            <div class="hero">
+                <h1>Descubra sua Essência Única</h1>
+                <p>Uma experiência olfativa que conta a sua história ✨</p>
+            </div>
+
+            <div class="featured-products">
+                <h2>🔥 Perfumes em Destaque</h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-icon">🌹</div>
+                        <h3>Rose Éternel</h3>
+                        <p>Fragrância floral romântica e envolvente</p>
+                        <div class="price">R$ 299,90</div>
+                        <button class="btn">Comprar</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">🍊</div>
+                        <h3>Citrus Breeze</h3>
+                        <p>Frescor cítrico para momentos especiais</p>
+                        <div class="price">R$ 249,90</div>
+                        <button class="btn">Comprar</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">🪵</div>
+                        <h3>Sandalwood Dream</h3>
+                        <p>Aroma amadeirado sofisticado</p>
+                        <div class="price">R$ 349,90</div>
+                        <button class="btn">Comprar</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">✨</div>
+                        <h3>Oriental Mystic</h3>
+                        <p>Fragrância quente e misteriosa</p>
+                        <div class="price">R$ 399,90</div>
+                        <button class="btn">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOVA SEÇÃO ADICIONADA: COLEÇÃO EXCLUSIVA -->
+            <section class="exclusive-collection">
+                <div class="collection-container">
+                    <div class="collection-header">
+                        <span class="collection-badge">✦ EDIÇÃO LIMITADA ✦</span>
+                        <h2>🌸 Coleção Exclusiva</h2>
+                        <p>Fragrâncias autorais que despertam memórias e encantam os sentidos. Cada gota conta uma história única.</p>
+                    </div>
+
+                    <div class="collection-grid">
+                        <!-- Card 1 -->
+                        <div class="collection-card">
+                            <div class="card-badge">Novidade</div>
+                            <div class="collection-img">
+                                🌺
+                            </div>
+                            <div class="collection-info">
+                                <h3>Jasmim Noturno</h3>
+                                <div class="collection-sub">Chloé Absolu</div>
+                                <div class="collection-notes">
+                                    <span class="note-tag">Jasmim</span>
+                                    <span class="note-tag">Gardênia</span>
+                                    <span class="note-tag">Âmbar</span>
+                                </div>
+                                <div class="collection-price">R$ 459,90 <span class="old-price">R$ 589,90</span></div>
+                                <button class="collection-btn">Quero sentir</button>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="collection-card">
+                            <div class="card-badge">Mais Vendido</div>
+                            <div class="collection-img">
+                                🪵
+                            </div>
+                            <div class="collection-info">
+                                <h3>Cedro & Íris</h3>
+                                <div class="collection-sub">Maison Noir</div>
+                                <div class="collection-notes">
+                                    <span class="note-tag">Cedro</span>
+                                    <span class="note-tag">Íris</span>
+                                    <span class="note-tag">Vetiver</span>
+                                </div>
+                                <div class="collection-price">R$ 519,90 <span class="old-price">R$ 679,90</span></div>
+                                <button class="collection-btn">Quero sentir</button>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="collection-card">
+                            <div class="card-badge">Edição Ouro</div>
+                            <div class="collection-img">
+                                🍯
+                            </div>
+                            <div class="collection-info">
+                                <h3>Mel & Oud</h3>
+                                <div class="collection-sub">Arabian Elixir</div>
+                                <div class="collection-notes">
+                                    <span class="note-tag">Oud</span>
+                                    <span class="note-tag">Mel</span>
+                                    <span class="note-tag">Sândalo</span>
+                                </div>
+                                <div class="collection-price">R$ 649,90 <span class="old-price">R$ 799,90</span></div>
+                                <button class="collection-btn">Quero sentir</button>
+                            </div>
+                        </div>
+
+                        <!-- Card 4 (bônus) -->
+                        <div class="collection-card">
+                            <div class="card-badge">Exclusivo</div>
+                            <div class="collection-img">
+                                🧘
+                            </div>
+                            <div class="collection-info">
+                                <h3>Almíscar Branco</h3>
+                                <div class="collection-sub">Neroli Portofino</div>
+                                <div class="collection-notes">
+                                    <span class="note-tag">Almíscar</span>
+                                    <span class="note-tag">Neroli</span>
+                                    <span class="note-tag">Lavanda</span>
+                                </div>
+                                <div class="collection-price">R$ 389,90 <span class="old-price">R$ 479,90</span></div>
+                                <button class="collection-btn">Quero sentir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collection-footer">
+                        <a href="#" class="view-all">
+                            Ver toda coleção exclusiva ✨
+                        </a>
+                    </div>
+                </div>
             </section>
         </main>
+
         <footer>
             <p>Erika Abud</p>
         </footer>
     </div>
 
+    <script>
+        // Menu Mobile
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Dropdown mobile
+        const dropdowns = document.querySelectorAll('.dropdown');
+
+        dropdowns.forEach(dropdown => {
+            const link = dropdown.querySelector('.nav-link');
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Fechar menu ao clicar em link (mobile)
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768 && !link.parentElement.classList.contains('dropdown')) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // Botões da seção de destaque (comprar)
+        const btns = document.querySelectorAll('.btn');
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                alert('Produto adicionado ao carrinho! 🛒');
+            });
+        });
+
+        // Botões da nova seção "Coleção Exclusiva"
+        const exclusiveBtns = document.querySelectorAll('.collection-btn');
+        exclusiveBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const card = btn.closest('.collection-card');
+                const perfumeName = card.querySelector('h3')?.innerText || 'Perfume exclusivo';
+                alert(`✨ ${perfumeName} foi adicionado à sua wishlist! Explore a essência especial. ✨`);
+            });
+        });
+
+        // Link "Ver toda coleção exclusiva"
+        const viewAllLink = document.querySelector('.view-all');
+        if(viewAllLink) {
+            viewAllLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('🌟 Em breve: catálogo completo da Coleção Exclusiva! Assine nossa newsletter para novidades.');
+            });
+        }
+    </script>
 </body>
 
 </html>
