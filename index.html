@@ -4,23 +4,477 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfume</title>
+    <title>Essência Perfumes - Sua essência única</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Menu Principal */
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Logo */
+        .logo {
+            padding: 15px 0;
+        }
+
+        .logo a {
+            font-size: 28px;
+            font-weight: bold;
+            text-decoration: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            font-size: 12px;
+            display: block;
+            color: #999;
+        }
+
+        /* Menu Items */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 20px 0;
+            display: inline-block;
+            transition: color 0.3s ease;
+            font-size: 16px;
+        }
+
+        .nav-link:hover {
+            color: #764ba2;
+        }
+
+        /* Dropdown para categorias de perfumes */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            list-style: none;
+            z-index: 1000;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding-left: 25px;
+        }
+
+        /* Ícone de seta no dropdown */
+        .dropdown-icon {
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        /* Ícones de busca e carrinho */
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-icons a {
+            color: #333;
+            text-decoration: none;
+            font-size: 20px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-icons a:hover {
+            color: #764ba2;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: #764ba2;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        /* Menu Hamburguer (Mobile) */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* Main Content */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .featured-products {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .featured-products h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+            font-size: 32px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 24px;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            font-size: 16px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                text-align: center;
+                gap: 0;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                transition: 0.3s;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-item {
+                margin: 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .nav-link {
+                padding: 15px;
+                width: 100%;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                display: none;
+                width: 100%;
+            }
+
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+
+            .nav-icons {
+                margin-right: 20px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-
+        <!-- header -->
         <header>
+            <nav class="navbar">
+                <div class="nav-container">
+                    <div class="logo">
+                        <a href="#">✨ ESSÊNCIA</a>
+                        <span>Perfumes & Fragrâncias</span>
+                    </div>
 
+                    <ul class="nav-menu" id="navMenu">
+                        <li class="nav-item"><a href="#" class="nav-link">🏠 Início</a></li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link">🌸 Perfumes <span class="dropdown-icon">▼</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">🌹 Florais & Românticos</a></li>
+                                <li><a href="#">🍊 Cítricos & Frescos</a></li>
+                                <li><a href="#">🪵 Amadeirados & Aromáticos</a></li>
+                                <li><a href="#">✨ Orientais & Quentes</a></li>
+                                <li><a href="#">🌿 Naturais & Veganos</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a href="#" class="nav-link">⭐ Lançamentos</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">🏷️ Promoções</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">📖 Sobre Nós</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">📞 Contato</a></li>
+                    </ul>
+
+                    <div class="nav-icons">
+                        <a href="#" title="Buscar">🔍</a>
+                        <a href="#" title="Minha Conta">👤</a>
+                        <a href="#" title="Carrinho">🛒 <span class="cart-count">0</span></a>
+                        <div class="hamburger" id="hamburger">☰</div>
+                    </div>
+                </div>
+            </nav>
         </header>
-        <main>
 
+        <main>
+            <div class="hero">
+                <h1>Descubra sua Essência Única</h1>
+                <p>Uma experiência olfativa que conta a sua história ✨</p>
+            </div>
+
+            <div class="featured-products">
+                <h2>🔥 Perfumes em Destaque</h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-icon">🌹</div>
+                        <h3>Rose Éternel</h3>
+                        <p>Fragrância floral romântica e envolvente</p>
+                        <div class="price">R$ 299,90</div>
+                        <button class="btn">Comprar</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">🍊</div>
+                        <h3>Citrus Breeze</h3>
+                        <p>Frescor cítrico para momentos especiais</p>
+                        <div class="price">R$ 249,90</div>
+                        <button class="btn">Comprar</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">🪵</div>
+                        <h3>Sandalwood Dream</h3>
+                        <p>Aroma amadeirado sofisticado</p>
+                        <div class="price">R$ 349,90</div>
+                        <button class="btn">Comprar</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-icon">✨</div>
+                        <h3>Oriental Mystic</h3>
+                        <p>Fragrância quente e misteriosa</p>
+                        <div class="price">R$ 399,90</div>
+                        <button class="btn">Comprar</button>
+                    </div>
+                </div>
+            </div>
         </main>
+
         <footer>
             <p>Erika Abud</p>
         </footer>
     </div>
 
+    <script>
+        // Menu Mobile
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            
+            navMenu.classList.toggle('active');
+        });
+
+        // Dropdown mobile
+        const dropdowns = document.querySelectorAll('.dropdown');
+
+        dropdowns.forEach(dropdown => {
+            const link = dropdown.querySelector('.nav-link');
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Fechar menu ao clicar em link (mobile)
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768 && !link.parentElement.classList.contains('dropdown')) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // Botão comprar
+        const btns = document.querySelectorAll('.btn');
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                alert('Produto adicionado ao carrinho! 🛒');
+            });
+        });
+    </script>
 </body>
 
 </html>
